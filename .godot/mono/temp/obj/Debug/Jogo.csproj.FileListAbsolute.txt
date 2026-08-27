@@ -1,0 +1,17 @@
+C:\Users\aluno\RiderProjects\jogo\.godot\mono\temp\bin\Debug\Jogo.deps.json
+C:\Users\aluno\RiderProjects\jogo\.godot\mono\temp\bin\Debug\Jogo.runtimeconfig.json
+C:\Users\aluno\RiderProjects\jogo\.godot\mono\temp\bin\Debug\Jogo.dll
+C:\Users\aluno\RiderProjects\jogo\.godot\mono\temp\bin\Debug\Jogo.pdb
+C:\Users\aluno\RiderProjects\jogo\.godot\mono\temp\bin\Debug\GodotSharp.dll
+C:\Users\aluno\RiderProjects\jogo\.godot\mono\temp\bin\Debug\GodotSharpEditor.dll
+C:\Users\aluno\RiderProjects\jogo\.godot\mono\temp\obj\Debug\Jogo.csproj.AssemblyReference.cache
+C:\Users\aluno\RiderProjects\jogo\.godot\mono\temp\obj\Debug\Jogo.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\aluno\RiderProjects\jogo\.godot\mono\temp\obj\Debug\Jogo.AssemblyInfoInputs.cache
+C:\Users\aluno\RiderProjects\jogo\.godot\mono\temp\obj\Debug\Jogo.AssemblyInfo.cs
+C:\Users\aluno\RiderProjects\jogo\.godot\mono\temp\obj\Debug\Jogo.csproj.CoreCompileInputs.cache
+C:\Users\aluno\RiderProjects\jogo\.godot\mono\temp\obj\Debug\Jogo.csproj.Up2Date
+C:\Users\aluno\RiderProjects\jogo\.godot\mono\temp\obj\Debug\Jogo.dll
+C:\Users\aluno\RiderProjects\jogo\.godot\mono\temp\obj\Debug\refint\Jogo.dll
+C:\Users\aluno\RiderProjects\jogo\.godot\mono\temp\obj\Debug\Jogo.pdb
+C:\Users\aluno\RiderProjects\jogo\.godot\mono\temp\obj\Debug\Jogo.genruntimeconfig.cache
+C:\Users\aluno\RiderProjects\jogo\.godot\mono\temp\obj\Debug\ref\Jogo.dll

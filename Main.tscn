@@ -1,0 +1,135 @@
+[gd_scene format=3 uid="uid://baxnvu1j14pho"]
+
+[ext_resource type="Script" uid="uid://in68e5ir1kls" path="res://GameManager.cs" id="1_glv2v"]
+
+[node name="GameManager" type="Control" unique_id=879158543 node_paths=PackedStringArray("WordLabel", "OptionsContainer", "TimerLabel", "LivesLabel", "TurnTimer", "DescLabel", "FeedbackLabel", "RestartButton", "FullscreenButton")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1169.0
+offset_bottom = 657.0
+script = ExtResource("1_glv2v")
+WordLabel = NodePath("CanvasLayer/HUD/WordLabel")
+OptionsContainer = NodePath("CanvasLayer/HUD/OptionsContainer")
+TimerLabel = NodePath("CanvasLayer/HUD/TimerLabel")
+LivesLabel = NodePath("CanvasLayer/HUD/LivesLabel")
+TurnTimer = NodePath("Timer")
+DescLabel = NodePath("CanvasLayer/HUD/DescLabel")
+FeedbackLabel = NodePath("CanvasLayer/HUD/FeedBackLabel")
+RestartButton = NodePath("CanvasLayer/HUD/RestartButton")
+FullscreenButton = NodePath("CanvasLayer/HUD/FullscreenButton")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1858699702]
+
+[node name="HUD" type="Panel" parent="CanvasLayer" unique_id=1948153444]
+top_level = true
+oversampling_with_scale = 1
+offset_top = -2.0
+offset_right = 1153.0
+offset_bottom = 648.0
+
+[node name="OptionsContainer" type="HBoxContainer" parent="CanvasLayer/HUD" unique_id=470987414]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 441.0
+offset_right = 1152.0
+offset_bottom = 472.0
+alignment = 1
+
+[node name="Button" type="Button" parent="CanvasLayer/HUD/OptionsContainer" unique_id=425264567]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+
+[node name="Button2" type="Button" parent="CanvasLayer/HUD/OptionsContainer" unique_id=1294764862]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+
+[node name="Button3" type="Button" parent="CanvasLayer/HUD/OptionsContainer" unique_id=1289843084]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+
+[node name="Button4" type="Button" parent="CanvasLayer/HUD/OptionsContainer" unique_id=1209818802]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+
+[node name="WordLabel" type="Label" parent="CanvasLayer/HUD" unique_id=130752706]
+custom_minimum_size = Vector2(320, 85)
+layout_mode = 0
+offset_left = 13.0
+offset_top = 134.0
+offset_right = 1145.0
+offset_bottom = 290.0
+theme_override_font_sizes/font_size = 100
+text = "PALAVRA"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TimerLabel" type="Label" parent="CanvasLayer/HUD" unique_id=224852795]
+layout_mode = 0
+offset_left = 974.0
+offset_top = 3.0
+offset_right = 1151.0
+offset_bottom = 64.0
+theme_override_font_sizes/font_size = 30
+text = "TEMPO:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LivesLabel" type="Label" parent="CanvasLayer/HUD" unique_id=150608826]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 3.0
+offset_right = 175.0
+offset_bottom = 61.0
+theme_override_font_sizes/font_size = 30
+text = "VIDA:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer/HUD" unique_id=1035359258]
+layout_mode = 0
+offset_left = 511.0
+offset_top = 603.0
+offset_right = 577.0
+offset_bottom = 626.0
+theme_override_font_sizes/font_size = 40
+
+[node name="DescLabel" type="Label" parent="CanvasLayer/HUD" unique_id=299484773]
+layout_mode = 0
+offset_left = -1.0
+offset_top = 387.0
+offset_right = 1150.0
+offset_bottom = 422.0
+theme_override_font_sizes/font_size = 25
+text = "QUAL A QUANTIDADE DE SÍLABAS DA PALAVRA A CIMA:"
+horizontal_alignment = 1
+
+[node name="FeedBackLabel" type="Label" parent="CanvasLayer/HUD" unique_id=2130286145]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 277.0
+offset_right = 1152.0
+offset_bottom = 388.0
+theme_override_font_sizes/font_size = 74
+text = "feedback"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RestartButton" type="Button" parent="CanvasLayer/HUD" unique_id=247742351]
+layout_mode = 0
+offset_left = 261.0
+offset_top = 458.0
+offset_right = 920.0
+offset_bottom = 507.0
+text = "JOGAR NOVAMENTE"
+
+[node name="FullscreenButton" type="Button" parent="CanvasLayer/HUD" unique_id=1585154087]
+layout_mode = 0
+offset_left = 928.0
+offset_top = 572.0
+offset_right = 1055.0
+offset_bottom = 625.0
+text = "Tela cheia"
+
+[node name="Timer" type="Timer" parent="." unique_id=2000031513]
+wait_time = 10.0
+one_shot = true
