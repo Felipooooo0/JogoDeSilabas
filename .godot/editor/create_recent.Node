@@ -1,6 +1,7 @@
 Button
-Label
 VBoxContainer
+PanelContainer
+Label
 Control
 Timer
 HBoxContainer

@@ -4,24 +4,26 @@ using System.Collections.Generic;
 using System.Linq;
 
 public enum Difficulty { Facil, Medio, Dificil }
+public enum WordCategory { Geral, Animais, Alimentos, Ciencia }
 
 public struct WordData
 {
     public string Word;
     public int Syllables;
     public Difficulty Level;
+    public WordCategory Category;
 
-    public WordData(string word, int syllables, Difficulty level = Difficulty.Facil)
+    public WordData(string word, int syllables, Difficulty level = Difficulty.Facil, WordCategory category = WordCategory.Geral)
     {
         Word = word.ToUpper();
         Syllables = syllables;
         Level = level;
+        Category = category;
     }
 }
 
 public partial class GameManager : Control
 {
-    // --- Referências aos Nós da UI ---
     [Export] public Label WordLabel;
     [Export] public Container OptionsContainer;
     [Export] public Label TimerLabel;
@@ -31,9 +33,10 @@ public partial class GameManager : Control
     [Export] public Label FeedbackLabel;
     [Export] public Button RestartButton;
     [Export] public Button FullscreenButton;
-
-    // --- Variáveis de Estado ---
+    
+    public static WordCategory SelectedCategory = WordCategory.Geral;
     private List<WordData> _wordDatabase;
+    private readonly HashSet<WordData> _usedWords = new(); // <--- Histórico para evitar repetições
     private WordData _currentWordData;
     private int _lives = 3;
     private int _score = 0;
@@ -60,6 +63,7 @@ public partial class GameManager : Control
         TurnTimer.Timeout += OnTurnTimeout;
         StartNewTurn();
     }
+
     public override void _Process(double delta)
     {
         if (!TurnTimer.IsStopped() && TimerLabel != null)
@@ -67,6 +71,7 @@ public partial class GameManager : Control
             TimerLabel.Text = $"Tempo: {Mathf.Ceil(TurnTimer.TimeLeft)}s";
         }
     }
+
     public override void _Input(InputEvent @event)
     {
         if (@event is InputEventKey key && key.Pressed && !key.Echo)
@@ -77,17 +82,20 @@ public partial class GameManager : Control
             }
         }
     }
+
     public void ToggleFullscreen()
     {
         bool isFullscreen = DisplayServer.WindowGetMode() == DisplayServer.WindowMode.Fullscreen;
         DisplayServer.WindowSetMode(isFullscreen ? DisplayServer.WindowMode.Windowed : DisplayServer.WindowMode.Fullscreen);
     }
+
     private Difficulty GetCurrentDifficulty()
     {
-        if (_score >= 120) return Difficulty.Dificil;
-        if (_score >= 50) return Difficulty.Medio;
+        if (_score >= 60) return Difficulty.Dificil;
+        if (_score >= 30) return Difficulty.Medio;
         return Difficulty.Facil;
     }
+
     private void StartNewTurn()
     {
         if (FeedbackLabel != null) FeedbackLabel.Text = "";
@@ -95,21 +103,30 @@ public partial class GameManager : Control
         Difficulty currentDiff = GetCurrentDifficulty();
         TurnTimer.WaitTime = currentDiff switch
         {
-            Difficulty.Dificil => 6.0,
-            Difficulty.Medio => 8.0,
-            _ => 10.0
+            Difficulty.Dificil => 30.0,
+            Difficulty.Medio => 25.0,
+            _ => 15.0
         };
+        
+        var availableWords = _wordDatabase.Where(w => 
+            w.Level <= currentDiff && 
+            (SelectedCategory == WordCategory.Geral || w.Category == SelectedCategory) &&
+            !_usedWords.Contains(w)
+        ).ToList();
 
-        var availableWords = _wordDatabase.Where(w => w.Level <= currentDiff).ToList();
+        
         if (availableWords.Count == 0)
         {
-            InitializeDatabase();
-            availableWords = _wordDatabase.Where(w => w.Level <= currentDiff).ToList();
+            _usedWords.Clear();
+            availableWords = _wordDatabase.Where(w => 
+                w.Level <= currentDiff && 
+                (SelectedCategory == WordCategory.Geral || w.Category == SelectedCategory)
+            ).ToList();
         }
 
         int randomIndex = _rand.Next(0, availableWords.Count);
         _currentWordData = availableWords[randomIndex];
-        _wordDatabase.Remove(_currentWordData);
+        _usedWords.Add(_currentWordData);
 
         WordLabel.Text = _currentWordData.Word;
         GenerateOptions();
@@ -118,6 +135,7 @@ public partial class GameManager : Control
         _canAnswer = true;
         TurnTimer.Start();
     }
+
     private async void OnOptionSelected(string buttonText)
     {
         if (!_canAnswer) return;
@@ -142,11 +160,13 @@ public partial class GameManager : Control
             }
         }
     }
+
     private async void OnTurnTimeout()
     {
         if (!_canAnswer) return;
         await HandleWrongAnswer($"Tempo esgotado! Era {_currentWordData.Syllables} sílaba(s)");
     }
+
     private async System.Threading.Tasks.Task HandleWrongAnswer(string message)
     {
         _canAnswer = false;
@@ -156,12 +176,14 @@ public partial class GameManager : Control
         await ToSignal(GetTree().CreateTimer(1.5), SceneTreeTimer.SignalName.Timeout);
         TakeDamage();
     }
+
     private void ShowFeedback(string text, Color color)
     {
         if (FeedbackLabel == null) return;
         FeedbackLabel.Text = text;
         FeedbackLabel.AddThemeColorOverride("font_color", color);
     }
+
     private void TakeDamage()
     {
         _lives--;
@@ -170,6 +192,7 @@ public partial class GameManager : Control
         if (_lives <= 0) GameOver();
         else StartNewTurn();
     }
+
     private void UpdateHud()
     {
         string hearts = string.Concat(Enumerable.Repeat("❤️", Math.Max(0, _lives)));
@@ -185,6 +208,7 @@ public partial class GameManager : Control
 
         if (DescLabel != null) DescLabel.Text = $"{diffText} | PONTOS: {_score}";
     }
+
     private void GameOver()
     {
         WordLabel.Text = $"FIM DE JOGO!\r\nPontos: {_score}";
@@ -195,6 +219,7 @@ public partial class GameManager : Control
         FeedbackLabel?.Hide();
         RestartButton?.Show();
     }
+
     private void GenerateOptions()
     {
         var buttons = OptionsContainer.GetChildren().OfType<Button>().ToList();
@@ -216,6 +241,7 @@ public partial class GameManager : Control
             buttons[i].Text = $"{shuffledOptions[i]}";
         }
     }
+
     private void ApplyVisualTheme()
     {
         RenderingServer.SetDefaultClearColor(Colors.White);
@@ -287,14 +313,11 @@ public partial class GameManager : Control
             Color darkCol = darkBorders[colorIndex % darkBorders.Length];
 
             ApplyButtonStyle(button, baseCol, darkCol, new Vector2(280, 110), 44);
-            
-            // Garante que a ação de clique do botão é vinculada
-            string capturedText = button.Text;
             button.Pressed += () => OnOptionSelected(button.Text);
-
             colorIndex++;
         }
     }
+
     private void ApplyBadgeStyle(Label label, Color bgColor, Color textColor)
     {
         StyleBoxFlat badge = new StyleBoxFlat
@@ -308,6 +331,7 @@ public partial class GameManager : Control
         label.AddThemeColorOverride("font_color", textColor);
         label.AddThemeFontSizeOverride("font_size", 22);
     }
+
     private void ApplyButtonStyle(Button button, Color baseCol, Color darkCol, Vector2 size, int fontSize)
     {
         StyleBoxFlat normalStyle = new StyleBoxFlat
@@ -337,50 +361,225 @@ public partial class GameManager : Control
         button.AddThemeStyleboxOverride("pressed", pressedStyle);
         button.AddThemeStyleboxOverride("focus", normalStyle);
     }
+
     private void InitializeDatabase()
     {
         _wordDatabase = new List<WordData>
-        
         {
-            // FÁCIL
-            new("Pão ", 1, Difficulty.Facil), new("Sol ☀", 1, Difficulty.Facil),
-            new("Mãe ", 1, Difficulty.Facil), new("Pai ", 1, Difficulty.Facil),
-            new("Flor ", 1, Difficulty.Facil), new("Trem ", 1, Difficulty.Facil),
-            new("Luz ", 1, Difficulty.Facil), new("Cão ", 1, Difficulty.Facil),
-            new("Casa ", 2, Difficulty.Facil), new("Gato ", 2, Difficulty.Facil),
-            new("Mesa ", 2, Difficulty.Facil), new("Livro ", 2, Difficulty.Facil),
-            new("Bola ", 2, Difficulty.Facil), new("Prato ", 2, Difficulty.Facil),
-            new("Carro ", 2, Difficulty.Facil), new("Árvore ", 2, Difficulty.Facil),
-            new("Porta ", 2, Difficulty.Facil), new("Peixe ", 2, Difficulty.Facil),
-            new("Janela ", 3, Difficulty.Facil), new("Banana ", 3, Difficulty.Facil),
-            new("Caderno ", 3, Difficulty.Facil), new("Escola ", 3, Difficulty.Facil),
-            new("Manteiga ", 3, Difficulty.Facil), new("Caneta 🖊", 3, Difficulty.Facil),
-            new("Relógio ", 3, Difficulty.Facil), new("Espelho ", 3, Difficulty.Facil),
-            new("Girafa ", 3, Difficulty.Facil), new("Sapato ", 3, Difficulty.Facil),
-            
-            new("Cadeira ", 3, Difficulty.Facil),
-            // MÉDIO
-            new("Computador ", 4, Difficulty.Medio), new("Chocolate ", 4, Difficulty.Medio),
-            new("Televisão ", 4, Difficulty.Medio), new("Geladeira ", 4, Difficulty.Medio),
-            new("Tartaruga ", 4, Difficulty.Medio), new("Borboleta ", 4, Difficulty.Medio),
-            new("Melancia ", 4, Difficulty.Medio), new("Bicicleta ", 4, Difficulty.Medio),
-            new("Dinossauro ", 4, Difficulty.Medio), new("Jabuticaba ", 5, Difficulty.Medio),
-            new("Matemática ", 5, Difficulty.Medio), new("Universidade ", 5, Difficulty.Medio),
-            new("Especialidade ", 5, Difficulty.Medio), new("Arqueologia ", 5, Difficulty.Medio),
-            
-            new("Enciclopédia ", 5, Difficulty.Medio),
-            // DIFÍCIL 
-            new("Pneu ", 1, Difficulty.Dificil), new("Ritmo ", 2, Difficulty.Dificil),
-            new("Apto ", 2, Difficulty.Dificil), new("Cacto ", 2, Difficulty.Dificil),
-            new("Advogado ", 4, Difficulty.Dificil), new("Objeção ", 3, Difficulty.Dificil),
-            new("Sublinhar ", 3, Difficulty.Dificil), new("Psicologia ", 5, Difficulty.Dificil),
-            new("Gratuito ", 3, Difficulty.Dificil), new("Circuito ", 3, Difficulty.Dificil),
-            new("Fluido ", 2, Difficulty.Dificil), new("Rubrica", 3, Difficulty.Dificil),
-            new("Saúde ", 3, Difficulty.Dificil), new("Açaí", 3, Difficulty.Dificil),
-            new("País ️", 2, Difficulty.Dificil), new("Responsabilidade ", 6, Difficulty.Dificil),
-            new("Inconstitucional ", 6, Difficulty.Dificil), new("Biodiversidade ", 6, Difficulty.Dificil),
-            new("Paralelepípedo ", 7, Difficulty.Dificil), new("Desproporcionalidade", 7, Difficulty.Dificil),
-            new("Inconstitucionalissimamente ", 10, Difficulty.Dificil)
+           // animais
+new("Cão", 1, Difficulty.Facil, WordCategory.Animais),
+new("Gato", 2, Difficulty.Facil, WordCategory.Animais),
+new("Peixe", 2, Difficulty.Facil, WordCategory.Animais),
+new("Pato", 2, Difficulty.Facil, WordCategory.Animais),
+new("Rato", 2, Difficulty.Facil, WordCategory.Animais),
+new("Sapo", 2, Difficulty.Facil, WordCategory.Animais),
+new("Vaca", 2, Difficulty.Facil, WordCategory.Animais),
+new("Boi", 1, Difficulty.Facil, WordCategory.Animais),
+new("Porco", 2, Difficulty.Facil, WordCategory.Animais),
+new("Cavalo", 3, Difficulty.Facil, WordCategory.Animais),
+new("Coelho", 3, Difficulty.Facil, WordCategory.Animais),
+new("Galinha", 3, Difficulty.Facil, WordCategory.Animais),
+new("Macaco", 3, Difficulty.Facil, WordCategory.Animais),
+new("Leão", 2, Difficulty.Facil, WordCategory.Animais),
+new("Tigre", 2, Difficulty.Facil, WordCategory.Animais),
+new("Urso", 2, Difficulty.Facil, WordCategory.Animais),
+new("Lobo", 2, Difficulty.Facil, WordCategory.Animais),
+new("Zebra", 3, Difficulty.Facil, WordCategory.Animais),
+new("Girafa", 3, Difficulty.Facil, WordCategory.Animais),
+new("Elefante", 4, Difficulty.Facil, WordCategory.Animais),
+new("Cobra", 2, Difficulty.Facil, WordCategory.Animais),
+new("Tubarão", 3, Difficulty.Facil, WordCategory.Animais),
+new("Baleia", 3, Difficulty.Facil, WordCategory.Animais),
+new("Golfinho", 4, Difficulty.Facil, WordCategory.Animais),
+new("Papagaio", 4, Difficulty.Facil, WordCategory.Animais),
+new("Pinguim", 3, Difficulty.Facil, WordCategory.Animais),
+new("Abelha", 3, Difficulty.Facil, WordCategory.Animais),
+new("Formiga", 3, Difficulty.Facil, WordCategory.Animais),
+new("Aranha", 3, Difficulty.Facil, WordCategory.Animais),
+new("Mosquito", 4, Difficulty.Facil, WordCategory.Animais),
+new("Tartaruga", 4, Difficulty.Medio, WordCategory.Animais),
+new("Borboleta", 4, Difficulty.Medio, WordCategory.Animais),
+new("Canguru", 4, Difficulty.Medio, WordCategory.Animais),
+new("Hipopótamo", 5, Difficulty.Medio, WordCategory.Animais),
+new("Rinoceronte", 5, Difficulty.Medio, WordCategory.Animais),
+new("Crocodilo", 4, Difficulty.Medio, WordCategory.Animais),
+new("Flamingo", 4, Difficulty.Medio, WordCategory.Animais),
+new("Camaleão", 4, Difficulty.Medio, WordCategory.Animais),
+new("Ornitorrinco", 6, Difficulty.Medio, WordCategory.Animais),
+new("Escorpião", 4, Difficulty.Medio, WordCategory.Animais),
+new("Caranguejo", 5, Difficulty.Medio, WordCategory.Animais),
+new("Polvo", 3, Difficulty.Medio, WordCategory.Animais),
+new("Lagosta", 4, Difficulty.Medio, WordCategory.Animais),
+new("Javali", 3, Difficulty.Medio, WordCategory.Animais),
+new("Hiena", 3, Difficulty.Medio, WordCategory.Animais),
+new("Gorila", 3, Difficulty.Medio, WordCategory.Animais),
+new("Pantera", 4, Difficulty.Medio, WordCategory.Animais),
+new("Chacal", 3, Difficulty.Medio, WordCategory.Animais),
+new("Gazela", 3, Difficulty.Medio, WordCategory.Animais),
+new("Avestruz", 4, Difficulty.Medio, WordCategory.Animais),
+new("Orangotango", 6, Difficulty.Dificil, WordCategory.Animais),
+new("Tamanduá", 4, Difficulty.Dificil, WordCategory.Animais),
+new("Pangolim", 4, Difficulty.Dificil, WordCategory.Animais),
+new("Axolote", 4, Difficulty.Dificil, WordCategory.Animais),
+// alimentos
+new("Pão", 1, Difficulty.Facil, WordCategory.Alimentos),
+new("Arroz", 2, Difficulty.Facil, WordCategory.Alimentos),
+new("Feijão", 2, Difficulty.Facil, WordCategory.Alimentos),
+new("Leite", 2, Difficulty.Facil, WordCategory.Alimentos),
+new("Ovo", 1, Difficulty.Facil, WordCategory.Alimentos),
+new("Sal", 1, Difficulty.Facil, WordCategory.Alimentos),
+new("Mel", 1, Difficulty.Facil, WordCategory.Alimentos),
+new("Queijo", 3, Difficulty.Facil, WordCategory.Alimentos),
+new("Carne", 2, Difficulty.Facil, WordCategory.Alimentos),
+new("Peixe", 2, Difficulty.Facil, WordCategory.Alimentos),
+new("Frango", 3, Difficulty.Facil, WordCategory.Alimentos),
+new("Bolo", 2, Difficulty.Facil, WordCategory.Alimentos),
+new("Pizza", 2, Difficulty.Facil, WordCategory.Alimentos),
+new("Sopa", 2, Difficulty.Facil, WordCategory.Alimentos),
+new("Massa", 2, Difficulty.Facil, WordCategory.Alimentos),
+new("Batata", 3, Difficulty.Facil, WordCategory.Alimentos),
+new("Banana", 3, Difficulty.Facil, WordCategory.Alimentos),
+new("Maçã", 2, Difficulty.Facil, WordCategory.Alimentos),
+new("Uva", 1, Difficulty.Facil, WordCategory.Alimentos),
+new("Pera", 2, Difficulty.Facil, WordCategory.Alimentos),
+new("Manga", 2, Difficulty.Facil, WordCategory.Alimentos),
+new("Limão", 2, Difficulty.Facil, WordCategory.Alimentos),
+new("Coco", 2, Difficulty.Facil, WordCategory.Alimentos),
+new("Milho", 2, Difficulty.Facil, WordCategory.Alimentos),
+new("Manteiga", 3, Difficulty.Facil, WordCategory.Alimentos),
+new("Chocolate", 4, Difficulty.Medio, WordCategory.Alimentos),
+new("Melancia", 4, Difficulty.Medio, WordCategory.Alimentos),
+new("Morango", 3, Difficulty.Medio, WordCategory.Alimentos),
+new("Abacaxi", 3, Difficulty.Medio, WordCategory.Alimentos),
+new("Maracujá", 4, Difficulty.Medio, WordCategory.Alimentos),
+new("Tangerina", 4, Difficulty.Medio, WordCategory.Alimentos),
+new("Azeitona", 4, Difficulty.Medio, WordCategory.Alimentos),
+new("Pipoca", 3, Difficulty.Medio, WordCategory.Alimentos),
+new("Hambúrguer", 5, Difficulty.Medio, WordCategory.Alimentos),
+new("Sanduíche", 4, Difficulty.Medio, WordCategory.Alimentos),
+new("Macarrão", 4, Difficulty.Medio, WordCategory.Alimentos),
+new("Biscoito", 4, Difficulty.Medio, WordCategory.Alimentos),
+new("Sorvete", 3, Difficulty.Medio, WordCategory.Alimentos),
+new("Iogurte", 3, Difficulty.Medio, WordCategory.Alimentos),
+new("Gelatina", 4, Difficulty.Medio, WordCategory.Alimentos),
+new("Panqueca", 4, Difficulty.Medio, WordCategory.Alimentos),
+new("Brigadeiro", 5, Difficulty.Medio, WordCategory.Alimentos),
+new("Geleia", 3, Difficulty.Medio, WordCategory.Alimentos),
+new("Castanha", 4, Difficulty.Medio, WordCategory.Alimentos),
+new("Jabuticaba", 5, Difficulty.Medio, WordCategory.Alimentos),
+new("Açaí", 3, Difficulty.Dificil, WordCategory.Alimentos),
+new("Carambola", 4, Difficulty.Dificil, WordCategory.Alimentos),
+new("Alcachofra", 5, Difficulty.Dificil, WordCategory.Alimentos),
+new("Parmesão", 4, Difficulty.Dificil, WordCategory.Alimentos),
+// ciencia
+new("Flor", 1, Difficulty.Facil, WordCategory.Ciencia),
+new("Sol", 1, Difficulty.Facil, WordCategory.Ciencia),
+new("Lua", 1, Difficulty.Facil, WordCategory.Ciencia),
+new("Água", 2, Difficulty.Facil, WordCategory.Ciencia),
+new("Ar", 1, Difficulty.Facil, WordCategory.Ciencia),
+new("Fogo", 2, Difficulty.Facil, WordCategory.Ciencia),
+new("Terra", 2, Difficulty.Facil, WordCategory.Ciencia),
+new("Chuva", 2, Difficulty.Facil, WordCategory.Ciencia),
+new("Nuvem", 2, Difficulty.Facil, WordCategory.Ciencia),
+new("Gelo", 2, Difficulty.Facil, WordCategory.Ciencia),
+new("Planta", 3, Difficulty.Facil, WordCategory.Ciencia),
+new("Árvore", 2, Difficulty.Facil, WordCategory.Ciencia),
+new("Folha", 2, Difficulty.Facil, WordCategory.Ciencia),
+new("Raiz", 2, Difficulty.Facil, WordCategory.Ciencia),
+new("Célula", 3, Difficulty.Facil, WordCategory.Ciencia),
+new("Livro", 2, Difficulty.Facil, WordCategory.Ciencia),
+new("Caderno", 3, Difficulty.Facil, WordCategory.Ciencia),
+new("Escola", 3, Difficulty.Facil, WordCategory.Ciencia),
+new("Caneta", 3, Difficulty.Facil, WordCategory.Ciencia),
+new("Lápis", 2, Difficulty.Facil, WordCategory.Ciencia),
+new("Mapa", 2, Difficulty.Facil, WordCategory.Ciencia),
+new("Planeta", 3, Difficulty.Facil, WordCategory.Ciencia),
+new("Estrela", 3, Difficulty.Facil, WordCategory.Ciencia),
+new("Mundo", 2, Difficulty.Facil, WordCategory.Ciencia),
+new("Computador", 4, Difficulty.Medio, WordCategory.Ciencia),
+new("Matemática", 5, Difficulty.Medio, WordCategory.Ciencia),
+new("Universidade", 5, Difficulty.Medio, WordCategory.Ciencia),
+new("Arqueologia", 5, Difficulty.Medio, WordCategory.Ciencia),
+new("Enciclopédia", 5, Difficulty.Medio, WordCategory.Ciencia),
+new("Astronomia", 5, Difficulty.Medio, WordCategory.Ciencia),
+new("Biologia", 4, Difficulty.Medio, WordCategory.Ciencia),
+new("Química", 3, Difficulty.Medio, WordCategory.Ciencia),
+new("Física", 3, Difficulty.Medio, WordCategory.Ciencia),
+new("Geologia", 4, Difficulty.Medio, WordCategory.Ciencia),
+new("Ecologia", 4, Difficulty.Medio, WordCategory.Ciencia),
+new("Laboratório", 5, Difficulty.Medio, WordCategory.Ciencia),
+new("Microscópio", 5, Difficulty.Medio, WordCategory.Ciencia),
+new("Experimento", 5, Difficulty.Medio, WordCategory.Ciencia),
+new("Pesquisa", 3, Difficulty.Medio, WordCategory.Ciencia),
+new("Planeta", 3, Difficulty.Medio, WordCategory.Ciencia),
+new("Galáxia", 3, Difficulty.Medio, WordCategory.Ciencia),
+new("Vulcão", 3, Difficulty.Medio, WordCategory.Ciencia),
+new("Dinossauro", 5, Difficulty.Medio, WordCategory.Ciencia),
+new("Eletricidade", 5, Difficulty.Medio, WordCategory.Ciencia),
+new("Psicologia", 5, Difficulty.Dificil, WordCategory.Ciencia),
+new("Circuito", 3, Difficulty.Dificil, WordCategory.Ciencia),
+new("Biodiversidade", 6, Difficulty.Dificil, WordCategory.Ciencia),
+new("Fotossíntese", 6, Difficulty.Dificil, WordCategory.Ciencia),
+new("Termodinâmica", 6, Difficulty.Dificil, WordCategory.Ciencia),
+// geral
+new("Sol", 1, Difficulty.Facil, WordCategory.Geral),
+new("Mãe", 1, Difficulty.Facil, WordCategory.Geral),
+new("Pai", 1, Difficulty.Facil, WordCategory.Geral),
+new("Irmão", 2, Difficulty.Facil, WordCategory.Geral),
+new("Amigo", 2, Difficulty.Facil, WordCategory.Geral),
+new("Trem", 1, Difficulty.Facil, WordCategory.Geral),
+new("Luz", 1, Difficulty.Facil, WordCategory.Geral),
+new("Casa", 2, Difficulty.Facil, WordCategory.Geral),
+new("Mesa", 2, Difficulty.Facil, WordCategory.Geral),
+new("Bola", 2, Difficulty.Facil, WordCategory.Geral),
+new("Carro", 2, Difficulty.Facil, WordCategory.Geral),
+new("Porta", 2, Difficulty.Facil, WordCategory.Geral),
+new("Rua", 1, Difficulty.Facil, WordCategory.Geral),
+new("Praia", 2, Difficulty.Facil, WordCategory.Geral),
+new("Mar", 1, Difficulty.Facil, WordCategory.Geral),
+new("Rio", 1, Difficulty.Facil, WordCategory.Geral),
+new("Céu", 1, Difficulty.Facil, WordCategory.Geral),
+new("Chão", 1, Difficulty.Facil, WordCategory.Geral),
+new("Janela", 3, Difficulty.Facil, WordCategory.Geral),
+new("Relógio", 3, Difficulty.Facil, WordCategory.Geral),
+new("Espelho", 3, Difficulty.Facil, WordCategory.Geral),
+new("Sapato", 3, Difficulty.Facil, WordCategory.Geral),
+new("Cadeira", 3, Difficulty.Facil, WordCategory.Geral),
+new("Escola", 3, Difficulty.Facil, WordCategory.Geral),
+new("Telefone", 4, Difficulty.Facil, WordCategory.Geral),
+new("Caneta", 3, Difficulty.Facil, WordCategory.Geral),
+new("Mochila", 3, Difficulty.Facil, WordCategory.Geral),
+new("Livro", 2, Difficulty.Facil, WordCategory.Geral),
+new("Papel", 2, Difficulty.Facil, WordCategory.Geral),
+new("Foto", 2, Difficulty.Facil, WordCategory.Geral),
+new("Televisão", 4, Difficulty.Medio, WordCategory.Geral),
+new("Bicicleta", 4, Difficulty.Medio, WordCategory.Geral),
+new("Geladeira", 4, Difficulty.Medio, WordCategory.Geral),
+new("Ventilador", 5, Difficulty.Medio, WordCategory.Geral),
+new("Elevador", 4, Difficulty.Medio, WordCategory.Geral),
+new("Computador", 4, Difficulty.Medio, WordCategory.Geral),
+new("Aeroporto", 4, Difficulty.Medio, WordCategory.Geral),
+new("Restaurante", 5, Difficulty.Medio, WordCategory.Geral),
+new("Biblioteca", 4, Difficulty.Medio, WordCategory.Geral),
+new("Hospital", 4, Difficulty.Medio, WordCategory.Geral),
+new("Mercado", 3, Difficulty.Medio, WordCategory.Geral),
+new("Shopping", 3, Difficulty.Medio, WordCategory.Geral),
+new("Cinema", 3, Difficulty.Medio, WordCategory.Geral),
+new("Teatro", 3, Difficulty.Medio, WordCategory.Geral),
+new("Futebol", 3, Difficulty.Medio, WordCategory.Geral),
+new("Música", 3, Difficulty.Medio, WordCategory.Geral),
+new("Viagem", 3, Difficulty.Medio, WordCategory.Geral),
+new("Férias", 3, Difficulty.Medio, WordCategory.Geral),
+new("Aniversário", 5, Difficulty.Medio, WordCategory.Geral),
+new("Especialidade", 5, Difficulty.Medio, WordCategory.Geral),
+new("Advogado", 4, Difficulty.Dificil, WordCategory.Geral),
+new("Objeção", 3, Difficulty.Dificil, WordCategory.Geral),
+new("Sublinhar", 3, Difficulty.Dificil, WordCategory.Geral),
+new("Gratuito", 3, Difficulty.Dificil, WordCategory.Geral),
+new("Rubrica", 3, Difficulty.Dificil, WordCategory.Geral),
+new("Responsabilidade", 6, Difficulty.Dificil, WordCategory.Geral),
+new("Inconstitucional", 6, Difficulty.Dificil, WordCategory.Geral)
+
         };
     }
 }

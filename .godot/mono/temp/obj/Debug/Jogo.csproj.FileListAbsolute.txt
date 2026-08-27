@@ -15,3 +15,4 @@ C:\Users\aluno\RiderProjects\jogo\.godot\mono\temp\obj\Debug\refint\Jogo.dll
 C:\Users\aluno\RiderProjects\jogo\.godot\mono\temp\obj\Debug\Jogo.pdb
 C:\Users\aluno\RiderProjects\jogo\.godot\mono\temp\obj\Debug\Jogo.genruntimeconfig.cache
 C:\Users\aluno\RiderProjects\jogo\.godot\mono\temp\obj\Debug\ref\Jogo.dll
+C:\Users\aluno\RiderProjects\jogo\.godot\mono\temp\obj\Debug\Jogo.sourcelink.json
