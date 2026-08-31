@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "0KiGgFdqAyY=",
+  "dgSpecHash": "DW5AysmZwjY=",
   "success": true,
-  "projectFilePath": "C:\\Users\\aluno\\RiderProjects\\jogo\\Jogo.csproj",
+  "projectFilePath": "D:\\JogoDeSilabas\\Jogo.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\aluno\\.nuget\\packages\\godot.sourcegenerators\\4.7.1\\godot.sourcegenerators.4.7.1.nupkg.sha512",
-    "C:\\Users\\aluno\\.nuget\\packages\\godotsharp\\4.7.1\\godotsharp.4.7.1.nupkg.sha512",
-    "C:\\Users\\aluno\\.nuget\\packages\\godotsharpeditor\\4.7.1\\godotsharpeditor.4.7.1.nupkg.sha512"
+    "C:\\Users\\aluno\\.nuget\\packages\\godot.sourcegenerators\\4.7.2\\godot.sourcegenerators.4.7.2.nupkg.sha512",
+    "C:\\Users\\aluno\\.nuget\\packages\\godotsharp\\4.7.2\\godotsharp.4.7.2.nupkg.sha512",
+    "C:\\Users\\aluno\\.nuget\\packages\\godotsharpeditor\\4.7.2\\godotsharpeditor.4.7.2.nupkg.sha512"
   ],
   "logs": []
 }

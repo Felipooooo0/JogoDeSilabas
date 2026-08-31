@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\aluno\\RiderProjects\\jogo\\Jogo.csproj": {}
+    "D:\\JogoDeSilabas\\Jogo.csproj": {}
   },
   "projects": {
-    "C:\\Users\\aluno\\RiderProjects\\jogo\\Jogo.csproj": {
+    "D:\\JogoDeSilabas\\Jogo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\aluno\\RiderProjects\\jogo\\Jogo.csproj",
+        "projectUniqueName": "D:\\JogoDeSilabas\\Jogo.csproj",
         "projectName": "Jogo",
-        "projectPath": "C:\\Users\\aluno\\RiderProjects\\jogo\\Jogo.csproj",
+        "projectPath": "D:\\JogoDeSilabas\\Jogo.csproj",
         "packagesPath": "C:\\Users\\aluno\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\aluno\\RiderProjects\\jogo\\.godot\\mono\\temp\\obj\\",
+        "outputPath": "D:\\JogoDeSilabas\\.godot\\mono\\temp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\aluno\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -49,17 +49,17 @@
             "Godot.SourceGenerators": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[4.7.1, )",
+              "version": "[4.7.2, )",
               "autoReferenced": true
             },
             "GodotSharp": {
               "target": "Package",
-              "version": "[4.7.1, )",
+              "version": "[4.7.2, )",
               "autoReferenced": true
             },
             "GodotSharpEditor": {
               "target": "Package",
-              "version": "[4.7.1, )",
+              "version": "[4.7.2, )",
               "autoReferenced": true
             }
           },
