@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "DW5AysmZwjY=",
+  "dgSpecHash": "Y7MTYRq32UI=",
   "success": true,
-  "projectFilePath": "D:\\JogoDeSilabas\\Jogo.csproj",
+  "projectFilePath": "C:\\Users\\aluno\\Desktop\\JogoDeSilabas\\Jogo.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\aluno\\.nuget\\packages\\godot.sourcegenerators\\4.7.2\\godot.sourcegenerators.4.7.2.nupkg.sha512",
     "C:\\Users\\aluno\\.nuget\\packages\\godotsharp\\4.7.2\\godotsharp.4.7.2.nupkg.sha512",

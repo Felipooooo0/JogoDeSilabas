@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\JogoDeSilabas\\Jogo.csproj": {}
+    "C:\\Users\\aluno\\Desktop\\JogoDeSilabas\\Jogo.csproj": {}
   },
   "projects": {
-    "D:\\JogoDeSilabas\\Jogo.csproj": {
+    "C:\\Users\\aluno\\Desktop\\JogoDeSilabas\\Jogo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\JogoDeSilabas\\Jogo.csproj",
+        "projectUniqueName": "C:\\Users\\aluno\\Desktop\\JogoDeSilabas\\Jogo.csproj",
         "projectName": "Jogo",
-        "projectPath": "D:\\JogoDeSilabas\\Jogo.csproj",
+        "projectPath": "C:\\Users\\aluno\\Desktop\\JogoDeSilabas\\Jogo.csproj",
         "packagesPath": "C:\\Users\\aluno\\.nuget\\packages\\",
-        "outputPath": "D:\\JogoDeSilabas\\.godot\\mono\\temp\\obj\\",
+        "outputPath": "C:\\Users\\aluno\\Desktop\\JogoDeSilabas\\.godot\\mono\\temp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\aluno\\AppData\\Roaming\\NuGet\\NuGet.Config"

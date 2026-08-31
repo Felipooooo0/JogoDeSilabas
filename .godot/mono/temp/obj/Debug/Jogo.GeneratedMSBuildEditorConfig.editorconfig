@@ -1,7 +1,7 @@
 is_global = true
 build_property.GodotDisabledSourceGenerators = 
-build_property.GodotProjectDir = D:\JogoDeSilabas\
-build_property.GodotProjectDirBase64 = RDpcSm9nb0RlU2lsYWJhc1w=
+build_property.GodotProjectDir = C:\Users\aluno\Desktop\JogoDeSilabas\
+build_property.GodotProjectDirBase64 = QzpcVXNlcnNcYWx1bm9cRGVza3RvcFxKb2dvRGVTaWxhYmFzXA==
 build_property.GodotSourceGenerators = 
 build_property.IsGodotToolsProject = 
 build_property.TargetFramework = net8.0
@@ -15,7 +15,7 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Jogo
-build_property.ProjectDir = D:\JogoDeSilabas\
+build_property.ProjectDir = C:\Users\aluno\Desktop\JogoDeSilabas\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.EffectiveAnalysisLevelStyle = 8.0
