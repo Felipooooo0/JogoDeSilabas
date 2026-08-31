@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\aluno\\RiderProjects\\jogo\\Jogo.csproj": {}
+    "C:\\Users\\aluno\\Desktop\\JogoDeSilabas (copiar 1)\\Jogo.csproj": {}
   },
   "projects": {
-    "C:\\Users\\aluno\\RiderProjects\\jogo\\Jogo.csproj": {
+    "C:\\Users\\aluno\\Desktop\\JogoDeSilabas (copiar 1)\\Jogo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\aluno\\RiderProjects\\jogo\\Jogo.csproj",
+        "projectUniqueName": "C:\\Users\\aluno\\Desktop\\JogoDeSilabas (copiar 1)\\Jogo.csproj",
         "projectName": "Jogo",
-        "projectPath": "C:\\Users\\aluno\\RiderProjects\\jogo\\Jogo.csproj",
+        "projectPath": "C:\\Users\\aluno\\Desktop\\JogoDeSilabas (copiar 1)\\Jogo.csproj",
         "packagesPath": "C:\\Users\\aluno\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\aluno\\RiderProjects\\jogo\\.godot\\mono\\temp\\obj\\",
+        "outputPath": "C:\\Users\\aluno\\Desktop\\JogoDeSilabas (copiar 1)\\.godot\\mono\\temp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\aluno\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -24,7 +24,6 @@
         },
         "frameworks": {
           "net8.0": {
-            "framework": "net8.0",
             "targetAlias": "net8.0",
             "projectReferences": {}
           }
@@ -43,23 +42,22 @@
       },
       "frameworks": {
         "net8.0": {
-          "framework": "net8.0",
           "targetAlias": "net8.0",
           "dependencies": {
             "Godot.SourceGenerators": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[4.7.1, )",
+              "version": "[4.7.2, )",
               "autoReferenced": true
             },
             "GodotSharp": {
               "target": "Package",
-              "version": "[4.7.1, )",
+              "version": "[4.7.2, )",
               "autoReferenced": true
             },
             "GodotSharpEditor": {
               "target": "Package",
-              "version": "[4.7.1, )",
+              "version": "[4.7.2, )",
               "autoReferenced": true
             }
           },
