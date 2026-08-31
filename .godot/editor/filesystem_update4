@@ -1,2 +1,3 @@
-res://Main.tscn
-res://InicialBase.tscn
+res://InicialSilabas.cs
+res://GameManager.cs
+res://Menu.tscn

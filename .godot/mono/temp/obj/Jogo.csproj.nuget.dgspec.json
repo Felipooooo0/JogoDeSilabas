@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/run/media/diilys/DIA/JogoDeSilabas/Jogo.csproj": {}
+    "D:\\JogoDeSilabas\\Jogo.csproj": {}
   },
   "projects": {
-    "/run/media/diilys/DIA/JogoDeSilabas/Jogo.csproj": {
+    "D:\\JogoDeSilabas\\Jogo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/run/media/diilys/DIA/JogoDeSilabas/Jogo.csproj",
+        "projectUniqueName": "D:\\JogoDeSilabas\\Jogo.csproj",
         "projectName": "Jogo",
-        "projectPath": "/run/media/diilys/DIA/JogoDeSilabas/Jogo.csproj",
-        "packagesPath": "/home/diilys/.nuget/packages/",
-        "outputPath": "/run/media/diilys/DIA/JogoDeSilabas/.godot/mono/temp/obj/",
+        "projectPath": "D:\\JogoDeSilabas\\Jogo.csproj",
+        "packagesPath": "C:\\Users\\aluno\\.nuget\\packages\\",
+        "outputPath": "D:\\JogoDeSilabas\\.godot\\mono\\temp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/diilys/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\aluno\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -24,6 +24,7 @@
         },
         "frameworks": {
           "net8.0": {
+            "framework": "net8.0",
             "targetAlias": "net8.0",
             "projectReferences": {}
           }
@@ -32,26 +33,33 @@
           "warnAsError": [
             "NU1605"
           ]
-        }
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
         "net8.0": {
+          "framework": "net8.0",
           "targetAlias": "net8.0",
           "dependencies": {
             "Godot.SourceGenerators": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[4.6.3, )",
+              "version": "[4.7.2, )",
               "autoReferenced": true
             },
             "GodotSharp": {
               "target": "Package",
-              "version": "[4.6.3, )",
+              "version": "[4.7.2, )",
               "autoReferenced": true
             },
             "GodotSharpEditor": {
               "target": "Package",
-              "version": "[4.6.3, )",
+              "version": "[4.7.2, )",
               "autoReferenced": true
             }
           },
@@ -71,7 +79,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.129/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
