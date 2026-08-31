@@ -20,7 +20,7 @@ texture_margin_bottom = 3.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ylpcl"]
 atlas = ExtResource("1_uubjt")
-region = Rect2(0, 0, 12, 12)
+region = Rect2(-1, 24, 13, 12)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cx167"]
 content_margin_top = 4.0

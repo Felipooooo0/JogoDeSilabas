@@ -5,7 +5,7 @@ using System.Linq;
 
 public enum Difficulty { Facil, Medio, Dificil }
 public enum WordCategory { Geral, Animais, Alimentos, Ciencia }
-
+//srstst
 public struct WordData
 {
 	public string Word;

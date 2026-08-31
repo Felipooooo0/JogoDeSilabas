@@ -13,14 +13,11 @@ public partial class InicialSilabas : Control
 	[Export] public Button BtnAlimentos;
 	[Export] public Button BtnCiencia;
 	[Export] public Button BtnVoltar;
-
+	
 
 	public override void _Ready()
 	{
-		// =====================================================
-		// ESTADO INICIAL DAS TELAS
-		// =====================================================
-
+	
 		if (MainMenuContainer != null)
 			MainMenuContainer.Show();
 
@@ -28,20 +25,12 @@ public partial class InicialSilabas : Control
 			ThemeMenuContainer.Hide();
 
 
-		// =====================================================
-		// VÍNCULO DOS BOTÕES PRINCIPAIS
-		// =====================================================
-
 		if (PlayButton != null)
 			PlayButton.Pressed += OnPlayClicked;
 
 		if (ExitButton != null)
 			ExitButton.Pressed += () => GetTree().Quit();
 
-
-		// =====================================================
-		// VÍNCULO DOS BOTÕES DE CATEGORIA
-		// =====================================================
 
 		if (BtnGeral != null)
 			BtnGeral.Pressed += () => StartGameWithCategory(WordCategory.Geral);
@@ -59,10 +48,6 @@ public partial class InicialSilabas : Control
 			BtnVoltar.Pressed += OnBackClicked;
 	}
 
-
-	// =========================================================
-	// LÓGICA DE ALTERNAÇÃO DE TELAS
-	// =========================================================
 
 	private void OnPlayClicked()
 	{
@@ -83,10 +68,7 @@ public partial class InicialSilabas : Control
 	}
 
 
-	// =========================================================
-	// TRANSIÇÃO PARA A CENA DO JOGO
-	// =========================================================
-
+	
 	private void StartGameWithCategory(WordCategory category)
 	{
 		GameManager.SelectedCategory = category;
