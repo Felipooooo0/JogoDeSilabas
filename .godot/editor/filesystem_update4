@@ -1,3 +1,2 @@
-res://GameManager.cs
-res://MenuManager.cs
-res://menu_manager.tscn
+res://Main.tscn
+res://InicialBase.tscn

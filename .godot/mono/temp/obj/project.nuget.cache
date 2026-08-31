@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "0KiGgFdqAyY=",
+  "dgSpecHash": "z27dMQyKWjyETuV6j10daRAbakBZ9///o0PBDSfJx45KP1gsQ37e//itvTdtuzVJxUqkBhg7w7eYarHW76W8Zg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\aluno\\RiderProjects\\jogo\\Jogo.csproj",
+  "projectFilePath": "/run/media/diilys/DIA/JogoDeSilabas/Jogo.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\aluno\\.nuget\\packages\\godot.sourcegenerators\\4.7.1\\godot.sourcegenerators.4.7.1.nupkg.sha512",
-    "C:\\Users\\aluno\\.nuget\\packages\\godotsharp\\4.7.1\\godotsharp.4.7.1.nupkg.sha512",
-    "C:\\Users\\aluno\\.nuget\\packages\\godotsharpeditor\\4.7.1\\godotsharpeditor.4.7.1.nupkg.sha512"
+    "/home/diilys/.nuget/packages/godot.sourcegenerators/4.6.3/godot.sourcegenerators.4.6.3.nupkg.sha512",
+    "/home/diilys/.nuget/packages/godotsharp/4.6.3/godotsharp.4.6.3.nupkg.sha512",
+    "/home/diilys/.nuget/packages/godotsharpeditor/4.6.3/godotsharpeditor.4.6.3.nupkg.sha512"
   ],
   "logs": []
 }

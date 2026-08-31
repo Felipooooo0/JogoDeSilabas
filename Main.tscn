@@ -1,135 +1,409 @@
 [gd_scene format=3 uid="uid://baxnvu1j14pho"]
 
 [ext_resource type="Script" uid="uid://in68e5ir1kls" path="res://GameManager.cs" id="1_glv2v"]
+[ext_resource type="FontFile" uid="uid://cymhq3yoj7mw0" path="res://Fonts/pixel_operator/PixelOperatorSC-Bold.ttf" id="2_uu6xs"]
+[ext_resource type="Texture2D" uid="uid://b6jffnb6fhu5c" path="res://menu.png" id="3_cm0pq"]
 
-[node name="GameManager" type="Control" unique_id=879158543 node_paths=PackedStringArray("WordLabel", "OptionsContainer", "TimerLabel", "LivesLabel", "TurnTimer", "DescLabel", "FeedbackLabel", "RestartButton", "FullscreenButton")]
+[sub_resource type="AtlasTexture" id="AtlasTexture_q0ko6"]
+atlas = ExtResource("3_cm0pq")
+region = Rect2(36, 36, 12, 12)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3dxm6"]
+content_margin_left = 16.0
+content_margin_top = 12.0
+content_margin_right = 16.0
+content_margin_bottom = 12.0
+texture = SubResource("AtlasTexture_q0ko6")
+texture_margin_left = 3.0
+texture_margin_top = 4.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_r0du0"]
+load_path = "res://.godot/imported/botoes.png-e33edc5fc78331584b47bf95bd7cf560.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cm0pq"]
+atlas = SubResource("CompressedTexture2D_r0du0")
+region = Rect2(0, 0, 12, 12)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fos0i"]
+content_margin_top = 4.0
+content_margin_bottom = 8.0
+texture = SubResource("AtlasTexture_cm0pq")
+texture_margin_left = 3.0
+texture_margin_top = 2.0
+texture_margin_right = 3.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="CSharpScript" id="CSharpScript_03owx"]
+script/source = "@tool
+extends Button
+
+# Arraste sua spritesheet/imagem para cá no Inspetor
+@export var spritesheet: Texture2D:
+	set(valor):
+		spritesheet = valor
+		_atualizar_estilo()
+
+# Defina a posição da cor na spritesheet (X, Y, Largura, Altura)
+@export var regiao_atlas: Rect2:
+	set(valor):
+		regiao_atlas = valor
+		_atualizar_estilo()
+
+func _ready():
+	_atualizar_estilo()
+
+func _atualizar_estilo():
+	# Só avança se a imagem tiver sido inserida no Inspetor
+	if not spritesheet:
+		return
+		
+	# 1. Cria um StyleBoxTexture totalmente novo e isolado na memória
+	var novo_estilo = StyleBoxTexture.new()
+	
+	# 2. Cria uma AtlasTexture totalmente nova e isolada na memória
+	var nova_atlas = AtlasTexture.new()
+	nova_atlas.atlas = spritesheet
+	nova_atlas.region = regiao_atlas
+	
+	# 3. Coloca a Atlas dentro do StyleBox
+	novo_estilo.texture = nova_atlas
+	
+	# 4. Opcional: Se você usa margens de 9-patch (Border Width/Margins), 
+	# configure-as aqui para o botão não distorcer as bordas:
+	# novo_estilo.texture_margin_left = 4
+	# novo_estilo.texture_margin_right = 4
+	# novo_estilo.texture_margin_top = 4
+	# novo_estilo.texture_margin_bottom = 4
+	
+	# 5. Aplica o estilo modificado exclusivamente ao estado \"normal\" deste botão
+	add_theme_stylebox_override(\"normal\", novo_estilo)
+"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_3dxm6"]
+load_path = "res://.godot/imported/botoes.png-e33edc5fc78331584b47bf95bd7cf560.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_trn2v"]
+atlas = SubResource("CompressedTexture2D_3dxm6")
+region = Rect2(24, 0, 12, 12)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_03owx"]
+content_margin_top = 4.0
+content_margin_bottom = 8.0
+texture = SubResource("AtlasTexture_trn2v")
+texture_margin_left = 3.0
+texture_margin_top = 2.0
+texture_margin_right = 3.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_wkp8b"]
+load_path = "res://.godot/imported/botoes.png-e33edc5fc78331584b47bf95bd7cf560.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_20pc6"]
+atlas = SubResource("CompressedTexture2D_wkp8b")
+region = Rect2(12, 24, 12, 12)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5vvyt"]
+content_margin_top = 4.0
+content_margin_bottom = 8.0
+texture = SubResource("AtlasTexture_20pc6")
+texture_margin_left = 3.0
+texture_margin_top = 2.0
+texture_margin_right = 3.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_c6i3y"]
+load_path = "res://.godot/imported/botoes.png-e33edc5fc78331584b47bf95bd7cf560.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lgr22"]
+atlas = SubResource("CompressedTexture2D_c6i3y")
+region = Rect2(0, 12, 12, 12)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_trn2v"]
+content_margin_top = 4.0
+content_margin_bottom = 8.0
+texture = SubResource("AtlasTexture_lgr22")
+texture_margin_left = 3.0
+texture_margin_top = 2.0
+texture_margin_right = 3.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p2bdr"]
+atlas = ExtResource("3_cm0pq")
+region = Rect2(0, 24, 12, 12)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_r0du0"]
+content_margin_left = 16.0
+content_margin_top = 12.0
+content_margin_right = 16.0
+content_margin_bottom = 12.0
+texture = SubResource("AtlasTexture_p2bdr")
+texture_margin_left = 3.0
+texture_margin_top = 4.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fos0i"]
+atlas = ExtResource("3_cm0pq")
+region = Rect2(36, 24, 12, 12)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lgr22"]
+content_margin_top = 4.0
+content_margin_bottom = 8.0
+texture = SubResource("AtlasTexture_fos0i")
+texture_margin_left = 3.0
+texture_margin_top = 2.0
+texture_margin_right = 3.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="CSharpScript" id="CSharpScript_trn2v"]
+script/source = "@tool
+extends Button
+
+# Arraste sua spritesheet/imagem para cá no Inspetor
+@export var spritesheet: Texture2D:
+	set(valor):
+		spritesheet = valor
+		_atualizar_estilo()
+
+# Defina a posição da cor na spritesheet (X, Y, Largura, Altura)
+@export var regiao_atlas: Rect2:
+	set(valor):
+		regiao_atlas = valor
+		_atualizar_estilo()
+
+func _ready():
+	_atualizar_estilo()
+
+func _atualizar_estilo():
+	# Só avança se a imagem tiver sido inserida no Inspetor
+	if not spritesheet:
+		return
+		
+	# 1. Cria um StyleBoxTexture totalmente novo e isolado na memória
+	var novo_estilo = StyleBoxTexture.new()
+	
+	# 2. Cria uma AtlasTexture totalmente nova e isolada na memória
+	var nova_atlas = AtlasTexture.new()
+	nova_atlas.atlas = spritesheet
+	nova_atlas.region = regiao_atlas
+	
+	# 3. Coloca a Atlas dentro do StyleBox
+	novo_estilo.texture = nova_atlas
+	
+	# 4. Opcional: Se você usa margens de 9-patch (Border Width/Margins), 
+	# configure-as aqui para o botão não distorcer as bordas:
+	# novo_estilo.texture_margin_left = 4
+	# novo_estilo.texture_margin_right = 4
+	# novo_estilo.texture_margin_top = 4
+	# novo_estilo.texture_margin_bottom = 4
+	
+	# 5. Aplica o estilo modificado exclusivamente ao estado \"normal\" deste botão
+	add_theme_stylebox_override(\"normal\", novo_estilo)
+"
+
+[node name="GameManager" type="Control" unique_id=879158543 node_paths=PackedStringArray("WordLabel", "OptionsContainer", "TimerLabel", "LivesLabel", "TurnTimer", "DescLabel", "FeedbackLabel", "RestartButton", "MenuButton", "MarginContainer2")]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 1169.0
-offset_bottom = 657.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_glv2v")
-WordLabel = NodePath("CanvasLayer/HUD/WordLabel")
-OptionsContainer = NodePath("CanvasLayer/HUD/OptionsContainer")
-TimerLabel = NodePath("CanvasLayer/HUD/TimerLabel")
-LivesLabel = NodePath("CanvasLayer/HUD/LivesLabel")
+WordLabel = NodePath("VBoxContainer/HBoxContainer/VBoxContainer/WordLabel")
+OptionsContainer = NodePath("VBoxContainer/VBoxContainer/MarginContainer/PanelContainer")
+TimerLabel = NodePath("VBoxContainer/MarginContainer/HBoxContainer/TimerLabel")
+LivesLabel = NodePath("VBoxContainer/MarginContainer/HBoxContainer/LivesLabel")
 TurnTimer = NodePath("Timer")
-DescLabel = NodePath("CanvasLayer/HUD/DescLabel")
-FeedbackLabel = NodePath("CanvasLayer/HUD/FeedBackLabel")
-RestartButton = NodePath("CanvasLayer/HUD/RestartButton")
-FullscreenButton = NodePath("CanvasLayer/HUD/FullscreenButton")
+DescLabel = NodePath("VBoxContainer/HBoxContainer/VBoxContainer/DescLabel")
+FeedbackLabel = NodePath("VBoxContainer/HBoxContainer/VBoxContainer/FeedBackLabel")
+RestartButton = NodePath("VBoxContainer/VBoxContainer/MarginContainer2/PanelContainer2/VBoxContainer/RestartButton")
+MenuButton = NodePath("VBoxContainer/VBoxContainer/MarginContainer2/PanelContainer2/VBoxContainer/MenuButton")
+MarginContainer2 = NodePath("VBoxContainer/VBoxContainer/MarginContainer2")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1858699702]
+[node name="Timer" type="Timer" parent="." unique_id=2000031513]
+wait_time = 10.0
+one_shot = true
 
-[node name="HUD" type="Panel" parent="CanvasLayer" unique_id=1948153444]
-top_level = true
-oversampling_with_scale = 1
-offset_top = -2.0
-offset_right = 1153.0
-offset_bottom = 648.0
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=13161455]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="OptionsContainer" type="HBoxContainer" parent="CanvasLayer/HUD" unique_id=470987414]
-layout_mode = 0
-offset_left = 1.0
-offset_top = 441.0
-offset_right = 1152.0
-offset_bottom = 472.0
-alignment = 1
-
-[node name="Button" type="Button" parent="CanvasLayer/HUD/OptionsContainer" unique_id=425264567]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer" unique_id=828318098]
 layout_mode = 2
-theme_override_font_sizes/font_size = 10
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
 
-[node name="Button2" type="Button" parent="CanvasLayer/HUD/OptionsContainer" unique_id=1294764862]
+[node name="HBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer" unique_id=819879654]
 layout_mode = 2
-theme_override_font_sizes/font_size = 10
+theme_override_constants/separation = 16
 
-[node name="Button3" type="Button" parent="CanvasLayer/HUD/OptionsContainer" unique_id=1289843084]
+[node name="LivesLabel" type="Label" parent="VBoxContainer/MarginContainer/HBoxContainer" unique_id=484814797]
 layout_mode = 2
-theme_override_font_sizes/font_size = 10
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("2_uu6xs")
+theme_override_font_sizes/font_size = 56
+text = "VIDA:"
+vertical_alignment = 1
 
-[node name="Button4" type="Button" parent="CanvasLayer/HUD/OptionsContainer" unique_id=1209818802]
+[node name="TimerLabel" type="Label" parent="VBoxContainer/MarginContainer/HBoxContainer" unique_id=1599869824]
 layout_mode = 2
-theme_override_font_sizes/font_size = 10
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("2_uu6xs")
+theme_override_font_sizes/font_size = 56
+text = "TEMPO:"
+vertical_alignment = 1
 
-[node name="WordLabel" type="Label" parent="CanvasLayer/HUD" unique_id=130752706]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=398976571]
+layout_mode = 2
+theme_override_constants/separation = 1400
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer" unique_id=236418837]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="WordLabel" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1013054542]
 custom_minimum_size = Vector2(320, 85)
-layout_mode = 0
-offset_left = 13.0
-offset_top = 134.0
-offset_right = 1145.0
-offset_bottom = 290.0
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_uu6xs")
 theme_override_font_sizes/font_size = 100
 text = "PALAVRA"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TimerLabel" type="Label" parent="CanvasLayer/HUD" unique_id=224852795]
-layout_mode = 0
-offset_left = 974.0
-offset_top = 3.0
-offset_right = 1151.0
-offset_bottom = 64.0
-theme_override_font_sizes/font_size = 30
-text = "TEMPO:"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="LivesLabel" type="Label" parent="CanvasLayer/HUD" unique_id=150608826]
-layout_mode = 0
-offset_left = 1.0
-offset_top = 3.0
-offset_right = 175.0
-offset_bottom = 61.0
-theme_override_font_sizes/font_size = 30
-text = "VIDA:"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ScoreLabel" type="Label" parent="CanvasLayer/HUD" unique_id=1035359258]
-layout_mode = 0
-offset_left = 511.0
-offset_top = 603.0
-offset_right = 577.0
-offset_bottom = 626.0
-theme_override_font_sizes/font_size = 40
-
-[node name="DescLabel" type="Label" parent="CanvasLayer/HUD" unique_id=299484773]
-layout_mode = 0
-offset_left = -1.0
-offset_top = 387.0
-offset_right = 1150.0
-offset_bottom = 422.0
-theme_override_font_sizes/font_size = 25
+[node name="DescLabel" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1291536051]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_uu6xs")
+theme_override_font_sizes/font_size = 32
 text = "QUAL A QUANTIDADE DE SÍLABAS DA PALAVRA A CIMA:"
 horizontal_alignment = 1
 
-[node name="FeedBackLabel" type="Label" parent="CanvasLayer/HUD" unique_id=2130286145]
-layout_mode = 0
-offset_left = 3.0
-offset_top = 277.0
-offset_right = 1152.0
-offset_bottom = 388.0
+[node name="FeedBackLabel" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1077064049]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_uu6xs")
 theme_override_font_sizes/font_size = 74
 text = "feedback"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="RestartButton" type="Button" parent="CanvasLayer/HUD" unique_id=247742351]
-layout_mode = 0
-offset_left = 261.0
-offset_top = 458.0
-offset_right = 920.0
-offset_bottom = 507.0
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer" unique_id=207358927]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/VBoxContainer" unique_id=1330283348]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_right = 40
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/VBoxContainer/MarginContainer" unique_id=52333020]
+texture_filter = 1
+custom_minimum_size = Vector2(640, 98)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_3dxm6")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/VBoxContainer/MarginContainer/PanelContainer" unique_id=2101740332]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/MarginContainer/PanelContainer/HBoxContainer" unique_id=2145970680]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Btn1" type="Button" parent="VBoxContainer/VBoxContainer/MarginContainer/PanelContainer/HBoxContainer/VBoxContainer" unique_id=666806180]
+texture_filter = 1
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_uu6xs")
+theme_override_font_sizes/font_size = 56
+theme_override_styles/normal = SubResource("StyleBoxTexture_fos0i")
+script = SubResource("CSharpScript_03owx")
+theme_override_styles/normal = SubResource("StyleBoxTexture_fos0i")
+theme_override_font_sizes/font_size = 56
+
+[node name="Btn2" type="Button" parent="VBoxContainer/VBoxContainer/MarginContainer/PanelContainer/HBoxContainer/VBoxContainer" unique_id=1793617688]
+texture_filter = 1
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_uu6xs")
+theme_override_font_sizes/font_size = 56
+theme_override_styles/normal = SubResource("StyleBoxTexture_03owx")
+script = SubResource("CSharpScript_03owx")
+theme_override_styles/normal = SubResource("StyleBoxTexture_03owx")
+theme_override_font_sizes/font_size = 56
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/MarginContainer/PanelContainer/HBoxContainer" unique_id=1623696499]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Btn3" type="Button" parent="VBoxContainer/VBoxContainer/MarginContainer/PanelContainer/HBoxContainer/VBoxContainer2" unique_id=1328278555]
+texture_filter = 1
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_uu6xs")
+theme_override_font_sizes/font_size = 56
+theme_override_styles/normal = SubResource("StyleBoxTexture_5vvyt")
+script = SubResource("CSharpScript_03owx")
+theme_override_fonts/font = ExtResource("2_uu6xs")
+theme_override_font_sizes/font_size = 56
+theme_override_styles/normal = SubResource("StyleBoxTexture_5vvyt")
+
+[node name="Btn4" type="Button" parent="VBoxContainer/VBoxContainer/MarginContainer/PanelContainer/HBoxContainer/VBoxContainer2" unique_id=2015704411]
+texture_filter = 1
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_uu6xs")
+theme_override_font_sizes/font_size = 56
+theme_override_styles/normal = SubResource("StyleBoxTexture_trn2v")
+script = SubResource("CSharpScript_03owx")
+theme_override_fonts/font = ExtResource("2_uu6xs")
+theme_override_font_sizes/font_size = 56
+theme_override_styles/normal = SubResource("StyleBoxTexture_trn2v")
+
+[node name="ScoreLabel" type="Label" parent="VBoxContainer/VBoxContainer" unique_id=86789772]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer/VBoxContainer" unique_id=2144525503]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_right = 40
+
+[node name="PanelContainer2" type="PanelContainer" parent="VBoxContainer/VBoxContainer/MarginContainer2" unique_id=1086499821]
+texture_filter = 1
+custom_minimum_size = Vector2(640, 98)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_r0du0")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/MarginContainer2/PanelContainer2" unique_id=1968984692]
+layout_mode = 2
+
+[node name="RestartButton" type="Button" parent="VBoxContainer/VBoxContainer/MarginContainer2/PanelContainer2/VBoxContainer" unique_id=2099396659]
+texture_filter = 1
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_uu6xs")
+theme_override_font_sizes/font_size = 56
+theme_override_styles/normal = SubResource("StyleBoxTexture_lgr22")
 text = "JOGAR NOVAMENTE"
+script = SubResource("CSharpScript_trn2v")
+theme_override_fonts/font = ExtResource("2_uu6xs")
+theme_override_font_sizes/font_size = 56
+theme_override_styles/normal = SubResource("StyleBoxTexture_lgr22")
 
-[node name="FullscreenButton" type="Button" parent="CanvasLayer/HUD" unique_id=1585154087]
-layout_mode = 0
-offset_left = 928.0
-offset_top = 572.0
-offset_right = 1055.0
-offset_bottom = 625.0
-text = "Tela cheia"
-
-[node name="Timer" type="Timer" parent="." unique_id=2000031513]
-wait_time = 10.0
-one_shot = true
+[node name="MenuButton" type="Button" parent="VBoxContainer/VBoxContainer/MarginContainer2/PanelContainer2/VBoxContainer" unique_id=1800298297]
+texture_filter = 1
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_uu6xs")
+theme_override_font_sizes/font_size = 56
+theme_override_styles/normal = SubResource("StyleBoxTexture_lgr22")
+text = "VOLTAR AO MENU"
+script = SubResource("CSharpScript_trn2v")
+theme_override_fonts/font = ExtResource("2_uu6xs")
+theme_override_font_sizes/font_size = 56
+theme_override_styles/normal = SubResource("StyleBoxTexture_lgr22")
