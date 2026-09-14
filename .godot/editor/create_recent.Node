@@ -1,10 +1,11 @@
+ColorRect
+TextureRect
 VBoxContainer
 HBoxContainer
 CenterContainer
 MarginContainer
 Control
 PanelContainer
-TextureRect
 Button
 Sprite2D
 NinePatchRect

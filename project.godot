@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Jogo"
+config/name="JogoRegrasDeCovivencia"
 run/main_scene="uid://x5gxcb5h1wrt"
 config/features=PackedStringArray("4.7", "C#", "Forward Plus")
 config/icon="res://icon.svg"

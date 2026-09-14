@@ -78,7 +78,7 @@ func _atualizar_estilo():
 	add_theme_stylebox_override(\"normal\", novo_estilo)
 "
 
-[node name="InicialSilabas" type="Control" unique_id=352558733 node_paths=PackedStringArray("MainMenuContainer", "ThemeMenuContainer", "PlayButton", "ExitButton", "BtnGeral", "BtnAnimais", "BtnAlimentos", "BtnCiencia", "BtnVoltar")]
+[node name="InicialSilabas" type="Control" unique_id=352558733 node_paths=PackedStringArray("MainMenuContainer", "PlayButton", "ExitButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -87,14 +87,8 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_p2bdr")
 MainMenuContainer = NodePath("MarginContainer/CenterContainer/VBoxContainer/PanelContainer")
-ThemeMenuContainer = NodePath("MarginContainer/CenterContainer/VBoxContainer/PanelContainer2")
 PlayButton = NodePath("MarginContainer/CenterContainer/VBoxContainer/PanelContainer/VBoxContainer/PlayButton")
 ExitButton = NodePath("MarginContainer/CenterContainer/VBoxContainer/PanelContainer/VBoxContainer/ExitButton")
-BtnGeral = NodePath("MarginContainer/CenterContainer/VBoxContainer/PanelContainer2/VBoxContainer/BtnGeral")
-BtnAnimais = NodePath("MarginContainer/CenterContainer/VBoxContainer/PanelContainer2/VBoxContainer/BtnAnimais")
-BtnAlimentos = NodePath("MarginContainer/CenterContainer/VBoxContainer/PanelContainer2/VBoxContainer/BtnAlimentos")
-BtnCiencia = NodePath("MarginContainer/CenterContainer/VBoxContainer/PanelContainer2/VBoxContainer/BtnCiencia")
-BtnVoltar = NodePath("MarginContainer/CenterContainer/VBoxContainer/PanelContainer/VBoxContainer/ExitButton")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1101647953]
 layout_mode = 1
@@ -120,7 +114,7 @@ layout_mode = 2
 theme_override_constants/line_spacing = 6
 theme_override_fonts/font = ExtResource("2_p2bdr")
 theme_override_font_sizes/font_size = 100
-text = "SI-LA-BAS"
+text = "REGRAS-DE-CONVIVÊNCIA"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -152,61 +146,3 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_ryryw")
 text = "SAIR"
 script = SubResource("CSharpScript_3gusl")
 theme_override_font_sizes/font_size = 56
-
-[node name="PanelContainer2" type="PanelContainer" parent="MarginContainer/CenterContainer/VBoxContainer" unique_id=1179895868]
-visible = false
-texture_filter = 1
-custom_minimum_size = Vector2(640, 98)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_hdume")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/CenterContainer/VBoxContainer/PanelContainer2" unique_id=909518224]
-layout_mode = 2
-
-[node name="BtnGeral" type="Button" parent="MarginContainer/CenterContainer/VBoxContainer/PanelContainer2/VBoxContainer" unique_id=1202292846]
-texture_filter = 1
-layout_mode = 2
-theme_override_fonts/font = ExtResource("2_p2bdr")
-theme_override_font_sizes/font_size = 56
-theme_override_styles/normal = SubResource("StyleBoxTexture_ryryw")
-text = "GERAL"
-script = SubResource("CSharpScript_3gusl")
-theme_override_fonts/font = ExtResource("2_p2bdr")
-theme_override_font_sizes/font_size = 56
-theme_override_styles/normal = SubResource("StyleBoxTexture_ryryw")
-
-[node name="BtnAnimais" type="Button" parent="MarginContainer/CenterContainer/VBoxContainer/PanelContainer2/VBoxContainer" unique_id=1941024308]
-texture_filter = 1
-layout_mode = 2
-theme_override_fonts/font = ExtResource("2_p2bdr")
-theme_override_font_sizes/font_size = 56
-theme_override_styles/normal = SubResource("StyleBoxTexture_ryryw")
-text = "ANIMAIS"
-script = SubResource("CSharpScript_3gusl")
-theme_override_fonts/font = ExtResource("2_p2bdr")
-theme_override_font_sizes/font_size = 56
-theme_override_styles/normal = SubResource("StyleBoxTexture_ryryw")
-
-[node name="BtnAlimentos" type="Button" parent="MarginContainer/CenterContainer/VBoxContainer/PanelContainer2/VBoxContainer" unique_id=2073550388]
-texture_filter = 1
-layout_mode = 2
-theme_override_fonts/font = ExtResource("2_p2bdr")
-theme_override_font_sizes/font_size = 56
-theme_override_styles/normal = SubResource("StyleBoxTexture_ryryw")
-text = "ALIMENTOS"
-script = SubResource("CSharpScript_3gusl")
-theme_override_fonts/font = ExtResource("2_p2bdr")
-theme_override_font_sizes/font_size = 56
-theme_override_styles/normal = SubResource("StyleBoxTexture_ryryw")
-
-[node name="BtnCiencia" type="Button" parent="MarginContainer/CenterContainer/VBoxContainer/PanelContainer2/VBoxContainer" unique_id=1952792594]
-texture_filter = 1
-layout_mode = 2
-theme_override_fonts/font = ExtResource("2_p2bdr")
-theme_override_font_sizes/font_size = 56
-theme_override_styles/normal = SubResource("StyleBoxTexture_ryryw")
-text = "CIÊNCIA"
-script = SubResource("CSharpScript_3gusl")
-theme_override_fonts/font = ExtResource("2_p2bdr")
-theme_override_font_sizes/font_size = 56
-theme_override_styles/normal = SubResource("StyleBoxTexture_ryryw")

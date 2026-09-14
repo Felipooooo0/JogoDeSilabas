@@ -93,11 +93,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\aluno\\Desktop\\JogoDeSilabas (copiar 1)\\Jogo.csproj",
+      "projectUniqueName": "C:\\Users\\aluno\\Desktop\\jogo-(4.7)\\Jogo.csproj",
       "projectName": "Jogo",
-      "projectPath": "C:\\Users\\aluno\\Desktop\\JogoDeSilabas (copiar 1)\\Jogo.csproj",
+      "projectPath": "C:\\Users\\aluno\\Desktop\\jogo-(4.7)\\Jogo.csproj",
       "packagesPath": "C:\\Users\\aluno\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\aluno\\Desktop\\JogoDeSilabas (copiar 1)\\.godot\\mono\\temp\\obj\\",
+      "outputPath": "C:\\Users\\aluno\\Desktop\\jogo-(4.7)\\.godot\\mono\\temp\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\aluno\\AppData\\Roaming\\NuGet\\NuGet.Config"

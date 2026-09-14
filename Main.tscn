@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://baxnvu1j14pho"]
 
 [ext_resource type="Script" uid="uid://in68e5ir1kls" path="res://GameManager.cs" id="1_glv2v"]
+[ext_resource type="Texture2D" uid="uid://dxnjhv774rt8t" path="res://imagens/certyo-removebg-preview.png" id="2_fos0i"]
 [ext_resource type="FontFile" uid="uid://cymhq3yoj7mw0" path="res://Fonts/pixel_operator/PixelOperatorSC-Bold.ttf" id="2_uu6xs"]
 [ext_resource type="Texture2D" uid="uid://b6jffnb6fhu5c" path="res://menu.png" id="3_cm0pq"]
+[ext_resource type="Texture2D" uid="uid://0fc462vtwu6n" path="res://imagens/X.png" id="3_fos0i"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q0ko6"]
 atlas = ExtResource("3_cm0pq")
@@ -24,7 +26,7 @@ load_path = "res://.godot/imported/botoes.png-e33edc5fc78331584b47bf95bd7cf560.c
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cm0pq"]
 atlas = SubResource("CompressedTexture2D_r0du0")
-region = Rect2(0, 0, 12, 12)
+region = Rect2(12, 24, 12, 12)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fos0i"]
 content_margin_top = 4.0
@@ -86,44 +88,12 @@ load_path = "res://.godot/imported/botoes.png-e33edc5fc78331584b47bf95bd7cf560.c
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_trn2v"]
 atlas = SubResource("CompressedTexture2D_3dxm6")
-region = Rect2(24, 0, 12, 12)
+region = Rect2(0, 0, 12, 12)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_03owx"]
 content_margin_top = 4.0
 content_margin_bottom = 8.0
 texture = SubResource("AtlasTexture_trn2v")
-texture_margin_left = 3.0
-texture_margin_top = 2.0
-texture_margin_right = 3.0
-texture_margin_bottom = 4.0
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_wkp8b"]
-load_path = "res://.godot/imported/botoes.png-e33edc5fc78331584b47bf95bd7cf560.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_20pc6"]
-atlas = SubResource("CompressedTexture2D_wkp8b")
-region = Rect2(12, 24, 12, 12)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5vvyt"]
-content_margin_top = 4.0
-content_margin_bottom = 8.0
-texture = SubResource("AtlasTexture_20pc6")
-texture_margin_left = 3.0
-texture_margin_top = 2.0
-texture_margin_right = 3.0
-texture_margin_bottom = 4.0
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_c6i3y"]
-load_path = "res://.godot/imported/botoes.png-e33edc5fc78331584b47bf95bd7cf560.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lgr22"]
-atlas = SubResource("CompressedTexture2D_c6i3y")
-region = Rect2(0, 12, 12, 12)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_trn2v"]
-content_margin_top = 4.0
-content_margin_bottom = 8.0
-texture = SubResource("AtlasTexture_lgr22")
 texture_margin_left = 3.0
 texture_margin_top = 2.0
 texture_margin_right = 3.0
@@ -203,7 +173,7 @@ func _atualizar_estilo():
 	add_theme_stylebox_override(\"normal\", novo_estilo)
 "
 
-[node name="GameManager" type="Control" unique_id=879158543 node_paths=PackedStringArray("WordLabel", "OptionsContainer", "TimerLabel", "LivesLabel", "TurnTimer", "DescLabel", "FeedbackLabel", "RestartButton", "MenuButton", "MarginContainer2")]
+[node name="GameManager" type="Control" unique_id=879158543 node_paths=PackedStringArray("WordLabel", "OptionsContainer", "DescLabel", "RestartButton", "MenuButton", "MarginContainer2", "ActionImage", "ScreenFlashRect")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -213,14 +183,14 @@ grow_vertical = 2
 script = ExtResource("1_glv2v")
 WordLabel = NodePath("VBoxContainer/HBoxContainer/VBoxContainer/WordLabel")
 OptionsContainer = NodePath("VBoxContainer/VBoxContainer/MarginContainer/PanelContainer")
-TimerLabel = NodePath("VBoxContainer/MarginContainer/HBoxContainer/TimerLabel")
-LivesLabel = NodePath("VBoxContainer/MarginContainer/HBoxContainer/LivesLabel")
-TurnTimer = NodePath("Timer")
 DescLabel = NodePath("VBoxContainer/HBoxContainer/VBoxContainer/DescLabel")
-FeedbackLabel = NodePath("VBoxContainer/HBoxContainer/VBoxContainer/FeedBackLabel")
 RestartButton = NodePath("VBoxContainer/VBoxContainer/MarginContainer2/PanelContainer2/VBoxContainer/RestartButton")
 MenuButton = NodePath("VBoxContainer/VBoxContainer/MarginContainer2/PanelContainer2/VBoxContainer/MenuButton")
 MarginContainer2 = NodePath("VBoxContainer/VBoxContainer/MarginContainer2")
+ActionImage = NodePath("VBoxContainer/HBoxContainer/VBoxContainer/TextureRect")
+ScreenFlashRect = NodePath("ColorRect")
+GoodIcon = ExtResource("2_fos0i")
+BadIcon = ExtResource("3_fos0i")
 
 [node name="Timer" type="Timer" parent="." unique_id=2000031513]
 wait_time = 10.0
@@ -233,35 +203,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer" unique_id=828318098]
-layout_mode = 2
-theme_override_constants/margin_left = 40
-theme_override_constants/margin_top = 40
-theme_override_constants/margin_right = 40
-theme_override_constants/margin_bottom = 40
-
-[node name="HBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer" unique_id=819879654]
-layout_mode = 2
-theme_override_constants/separation = 16
-
-[node name="LivesLabel" type="Label" parent="VBoxContainer/MarginContainer/HBoxContainer" unique_id=484814797]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 1
-theme_override_fonts/font = ExtResource("2_uu6xs")
-theme_override_font_sizes/font_size = 56
-text = "VIDA:"
-vertical_alignment = 1
-
-[node name="TimerLabel" type="Label" parent="VBoxContainer/MarginContainer/HBoxContainer" unique_id=1599869824]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 1
-theme_override_fonts/font = ExtResource("2_uu6xs")
-theme_override_font_sizes/font_size = 56
-text = "TEMPO:"
-vertical_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=398976571]
 layout_mode = 2
@@ -276,7 +217,7 @@ custom_minimum_size = Vector2(320, 85)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("2_uu6xs")
-theme_override_font_sizes/font_size = 100
+theme_override_font_sizes/font_size = 130
 text = "PALAVRA"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -284,17 +225,15 @@ vertical_alignment = 1
 [node name="DescLabel" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1291536051]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_uu6xs")
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 100
 text = "QUAL A QUANTIDADE DE SÍLABAS DA PALAVRA A CIMA:"
 horizontal_alignment = 1
 
-[node name="FeedBackLabel" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1077064049]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1784053281]
+custom_minimum_size = Vector2(0, 400)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_uu6xs")
-theme_override_font_sizes/font_size = 74
-text = "feedback"
-horizontal_alignment = 1
-vertical_alignment = 1
+expand_mode = 3
+stretch_mode = 5
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer" unique_id=207358927]
 layout_mode = 2
@@ -329,41 +268,19 @@ script = SubResource("CSharpScript_03owx")
 theme_override_styles/normal = SubResource("StyleBoxTexture_fos0i")
 theme_override_font_sizes/font_size = 56
 
-[node name="Btn2" type="Button" parent="VBoxContainer/VBoxContainer/MarginContainer/PanelContainer/HBoxContainer/VBoxContainer" unique_id=1793617688]
-texture_filter = 1
-layout_mode = 2
-theme_override_fonts/font = ExtResource("2_uu6xs")
-theme_override_font_sizes/font_size = 56
-theme_override_styles/normal = SubResource("StyleBoxTexture_03owx")
-script = SubResource("CSharpScript_03owx")
-theme_override_styles/normal = SubResource("StyleBoxTexture_03owx")
-theme_override_font_sizes/font_size = 56
-
 [node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/MarginContainer/PanelContainer/HBoxContainer" unique_id=1623696499]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Btn3" type="Button" parent="VBoxContainer/VBoxContainer/MarginContainer/PanelContainer/HBoxContainer/VBoxContainer2" unique_id=1328278555]
+[node name="Btn2" type="Button" parent="VBoxContainer/VBoxContainer/MarginContainer/PanelContainer/HBoxContainer/VBoxContainer2" unique_id=1793617688]
 texture_filter = 1
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_uu6xs")
 theme_override_font_sizes/font_size = 56
-theme_override_styles/normal = SubResource("StyleBoxTexture_5vvyt")
+theme_override_styles/normal = SubResource("StyleBoxTexture_03owx")
 script = SubResource("CSharpScript_03owx")
-theme_override_fonts/font = ExtResource("2_uu6xs")
+theme_override_styles/normal = SubResource("StyleBoxTexture_03owx")
 theme_override_font_sizes/font_size = 56
-theme_override_styles/normal = SubResource("StyleBoxTexture_5vvyt")
-
-[node name="Btn4" type="Button" parent="VBoxContainer/VBoxContainer/MarginContainer/PanelContainer/HBoxContainer/VBoxContainer2" unique_id=2015704411]
-texture_filter = 1
-layout_mode = 2
-theme_override_fonts/font = ExtResource("2_uu6xs")
-theme_override_font_sizes/font_size = 56
-theme_override_styles/normal = SubResource("StyleBoxTexture_trn2v")
-script = SubResource("CSharpScript_03owx")
-theme_override_fonts/font = ExtResource("2_uu6xs")
-theme_override_font_sizes/font_size = 56
-theme_override_styles/normal = SubResource("StyleBoxTexture_trn2v")
 
 [node name="ScoreLabel" type="Label" parent="VBoxContainer/VBoxContainer" unique_id=86789772]
 layout_mode = 2
@@ -407,3 +324,12 @@ script = SubResource("CSharpScript_trn2v")
 theme_override_fonts/font = ExtResource("2_uu6xs")
 theme_override_font_sizes/font_size = 56
 theme_override_styles/normal = SubResource("StyleBoxTexture_lgr22")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1548477063]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
