@@ -1,5 +1,5 @@
 78098b89c88a74ebe8c20117b8754620
-::res://::1789415959
+::res://::1789417556
 BotaoBase.tscn::PackedScene::913000024869864456::1789409251::0::1::::<><><>0<>0<><>::uid://cymhq3yoj7mw0::::res://Fonts/pixel_operator/PixelOperatorSC-Bold.ttf<>uid://b6jffnb6fhu5c::::res://menu.png
 botoes.png::CompressedTexture2D::1311368127429123485::1789409251::1789409251::1::::<><><>0<>0<>0933c36ef0c0afc75cdfb15f517e2db3<>res://.godot/imported/botoes.png-e33edc5fc78331584b47bf95bd7cf560.ctex::
 GameManager.cs::CSharpScript::590289074706426128::1789415673::0::1::::<>Control<><>0<>0<><>::
